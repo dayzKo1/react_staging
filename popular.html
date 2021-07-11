@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="../node_modules/@babel/standalone/babel.min.js"></script>
+    <script src="../node_modules/axios/dist/axios.min.js"></script> -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="lib/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script type="text/babel">
+        import _ from 'lodash';
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import axios from 'axios';
+        class Header extends React.Component {
+            render() {
+
+                return <div style={{ backgroundColor: '#80bde8', overflow: 'hidden' }}>
+                    <a style={{ textDecoration: 'none', fontSize: 30, color: 'black' }} href="http://127.0.0.1:5500/practice/popular.html"> Popular</a>
+                    <a style={{ textDecoration: 'none', fontSize: 30 }} href="http://127.0.0.1:5500/practice/battle.html"> Battle</a>
+                    <h2 style={{ textAlign: 'center' }}>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=none"> All </a>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=Javascript"> JavaScript </a>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=Ruby"> Ruby </a>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=Java"> Java </a>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=Css"> Css </a>
+                        <a style={{ textDecoration: 'none' }} href="http://127.0.0.1:5500/practice/popular.html?language=Python"> Python </a>
+                    </h2>
+                </div>
+            }
+        }
+        class Content extends React.Component {
+            render() {
+                return (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-around',
+                    }}>
+                        {this.props.children}
+                    </div>
+                )
+            }
+        }
+        class RepoList extends React.Component {
+
+            constructor(props) {
+                super(props)
+                this.state = { repos: [] }
+            }
+
+            async componentDidMount() {
+                var language = window.location.href.split('=')[1] || 'none';
+                var url = `https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&type=Repositories`
+                if (language != 'none') {
+                    url = 'https://api.github.com/search/repositories?q=stars:%3E1+language:' + language + '&sort=stars&order=desc&type=Repositories'
+                }
+                const res = await axios.get(url);
+                this.setState({
+                    repos: res.data.items
+                });
+            }
+
+            render() {
+                var i = 1
+                const list = this.state.repos
+                    .map(
+                        (item, key) =>
+                            <div key={item.id} style={{ display: 'flex', backgroundColor: '#ebebeb', marginBottom: 10, marginTop: 30, width: 350 }}>
+                                <ul style={{ listStyle: 'none' }}>
+                                    <span style={{ textAlign: 'center' }}>
+                                        <h1 style={{ fontSize: 60 }}>#{i++}</h1>
+                                        <img style={{ width: '88%' }} src={item.owner.avatar_url} />
+                                        <li style={{ fontSize: 35, color: 'red' }}>{item.name}</li>
+                                    </span>
+                                    <span style={{}}>
+                                        <li style={{ fontSize: 25 }}><i style={{ color: '#ffbf74', width: 20, height: 20, paddingLeft: 6, paddingRight: 24 }} class="fa fa-user"></i>{item.owner.login} </li>
+                                        <li style={{ fontSize: 25 }}><i style={{ color: '#ffd700', width: 20, height: 20, paddingLeft: 3, paddingRight: 25 }} class="fa fa-star"></i>{item.stargazers_count} stars</li>
+                                        <li style={{ fontSize: 25 }}><i style={{ color: '#82c3f5', width: 20, height: 20, paddingLeft: 8, paddingRight: 20 }} class="fa fa-code-fork"></i>{item.forks_count} forks</li>
+                                        <li style={{ fontSize: 25 }}><i style={{ color: '#f18a92', width: 20, height: 20, paddingLeft: 2, paddingRight: 26 }} class="fa fa-warning"></i>{item.open_issues_count} open issues</li>
+                                    </span>
+                                </ul>
+                            </div>
+                    );
+                return <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around',
+                    marginBottom: 20
+                }}>
+                    {list}
+                </div>
+            }
+        }
+
+        class App extends React.Component {
+            render() {
+                return <div>
+                    <Header>
+
+                    </Header>
+                    <Content>
+                        <RepoList />
+                    </Content>
+                </div>;
+            }
+        }
+        ReactDOM.render(
+            <App />,
+            document.getElementById('container')
+        );
+    </script>
+</body>
+
+</html>

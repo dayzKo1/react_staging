@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 import "./index.css";
 import { Link, } from "react-router-dom";
-import { Container, Row, Col ,Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faFighterJet, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from 'react-bootstrap';
@@ -53,7 +53,7 @@ class BattleBegin extends Component {
       this.setState({ isOne: true, notFoundPlayerOne: false, errorOne: false });
     } catch (e) {
       if (e.response) {
-        console.log("getPlayerOne: ", e.response.data.message);
+        //     console.log("getPlayerOne: ", e.response.data.message);
         this.setState({
           errorOne: true,
           errorOneMessage: e.response.data.message,
@@ -90,7 +90,7 @@ class BattleBegin extends Component {
       this.setState({ isTwo: true, notFoundPlayerTwo: false, errorTwo: false });
     } catch (e) {
       if (e.response) {
-        console.log("getPlayerTwo: ", e.response.data.message);
+        //     console.log("getPlayerTwo: ", e.response.data.message);
         this.setState({
           errorTwo: true,
           errorTwoMessage: e.response.data.message,
@@ -98,6 +98,9 @@ class BattleBegin extends Component {
       }
     }
     this.setState({ loadingTwo: false });
+    if (this.state.isOne && this.state.isTwo) {
+      this.refs.battle.disabled = ""
+    }
   };
   findTwoAgain = () => {
     this.props.setPlayerTwo({});
@@ -106,19 +109,20 @@ class BattleBegin extends Component {
   //输入框里的值为空时Submit不可点击
   oneInputChange = () => {
     const inputOne = this.refs.inputOne.value;
-    if (inputOne.match(/^[ ]*$/)) {
-      this.refs.submitOne.className = "submit_btn disabled_btn";
+    console.log(inputOne)
+    if (inputOne.match('/^[ ]*$/')) {
+      this.refs.submitOne.disabled = "disabled";
       return;
     }
-    this.refs.submitOne.className = "submit_btn";
+    this.refs.submitOne.disabled = "";
   };
   twoInputChange = () => {
     const inputTwo = this.refs.inputTwo.value;
     if (inputTwo.match(/^[ ]*$/)) {
-      this.refs.submitTwo.className = "submit_btn disabled_btn";
+      this.refs.submitTwo.disabled = "disabled";
       return;
     }
-    this.refs.submitTwo.className = "submit_btn";
+    this.refs.submitTwo.disabled = "";
   };
   //当焦点在Player One的输入框并按下enter键时
   oneEnter = (e) => {
@@ -183,12 +187,12 @@ class BattleBegin extends Component {
     return (
       <Container>
         <h1 style={{ textAlign: 'center' }}>Instructions</h1>
-        <Row style={{ textAlign: 'center' }}>  
-          <Col  lg={4} md={4} sm={6}>
+        <Row style={{ textAlign: 'center' }}>
+          <Col lg={4} md={4} sm={6}>
             <h4>Enter Two Github Users</h4>
             <FontAwesomeIcon style={{ color: '#ffbf74', fontSize: 200 }} icon={faUsers} />
           </Col >
-          <Col  lg={4} md={4} sm={6}>
+          <Col lg={4} md={4} sm={6}>
             <h4>Battle</h4>
             <FontAwesomeIcon style={{ color: '#b8e2f2', fontSize: 200 }} icon={faFighterJet} />
           </Col>
@@ -197,26 +201,32 @@ class BattleBegin extends Component {
             <FontAwesomeIcon style={{ color: '#ffdf36', fontSize: 200 }} icon={faTrophy} />
           </Col>
         </Row>
-        <h1 style={{ textAlign: 'center' }}>Instructions</h1>
+        <h1 style={{ textAlign: 'center' }}>Fight</h1>
         <Row style={{ textAlign: 'center' }}>
-        <div>
-          <div>
-            <div style={{}}>Player One</div>
+          <Col lg={6} md={6} sm={12}>
+            <div>Player One</div>
             {loadingOne ? (
               <div>
                 正在查找<Spinner animation="border" />
               </div>
             ) : isOne ? (
-              <div className="showPlayer">
-                <img
-                  src={playerOne.owner.avatar_url}
-                  alt={playerOne.name}
-                  style={{height:80,width:80}}
-                />
-                {playerOne.name}
-                <Button variant="primary" onClick={this.findOneAgain} className="delete_btn">
-                  删除
-                </Button>
+              <div style={{}}>
+                <div style={{ backgroundColor: 'skyblue', textAlign: 'center' }}>
+                  <div style={{ textAlign: 'right' }}>
+                    <Button variant="primary" onClick={this.findOneAgain} className="delete_btn">
+                      X
+                    </Button>
+                  </div>
+                  <div>
+                    <img
+                      className="img-thumbnail"
+                      src={playerOne.owner.avatar_url}
+                      alt={playerOne.name}
+                      style={{ width: '100%', height: 300 }}
+                    />
+                    <span>playName:{playerOne.name}</span>
+                  </div>
+                </div>
               </div>
             ) : (
               <div>
@@ -227,7 +237,8 @@ class BattleBegin extends Component {
                   onChange={this.oneInputChange}
                   onKeyDown={this.oneEnter}
                 ></input>
-                <Button 
+                <Button
+                  disabled="disabled"
                   variant="primary"
                   onClick={this.getPlayerOne}
                   ref="submitOne"
@@ -237,62 +248,73 @@ class BattleBegin extends Component {
                 <div>{renderInfoOne}</div>
               </div>
             )}
-          </div>
-          <div>
-            <div style={{}}>Player Two</div>
-            {loadingTwo ? (
-              <div>
-                正在查找
-              </div>
-            ) : isTwo ? (
-              <div className="showPlayer">
-                <img
-                  src={playerTwo.owner.avatar_url}
-                  alt={playerTwo.name}
-                  style={{height:50,width:50}}
-                />
-                {playerTwo.name}
-                <Button variant="primary" onClick={this.findTwoAgain} className="delete_btn">
-                删除
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <input
-                  ref="inputTwo"
-                  placeholder="输入PlayerTwo"
-                  className="submit_btn disabled_btn"
-                  onChange={this.twoInputChange}
-                  onKeyDown={this.twoEnter}
-                ></input>
-                <Button variant="primary"
-                  onClick={this.getPlayerTwo}
-                  ref="submitTwo"
-                >
-                  查找
-                </Button>
-                <div>{renderInfoTwo}</div>
-              </div>
-            )}
-          </div>
-        </div>
-        {isOne && isTwo && (
-          <div style={{}}>
-            <Link
-              to={{
-                pathname: `/BattleResult`,
-                search: `?user1=${playerOne.name}&user2=${playerTwo.name}`,
-                state: {
-                  playerOne,
-                  playerTwo,
-                },
-              }}
-            >
-              <Button variant="primary" className="battle_btn">Battle</Button>
-            </Link>
-          </div>
-        )}
+
+          </Col>
+          <Col lg={6} md={6} sm={12}>
+            <div>Player Two</div>
+            {
+              loadingTwo ? (
+                <div>
+                  正在查找<Spinner animation="border" />
+                </div>
+              ) : isTwo ? (
+                <div style={{ backgroundColor: 'skyblue', textAlign: 'center' }}>
+                  <div style={{ textAlign: 'right' }}>
+                    <Button variant="primary" onClick={this.findTwoAgain} className="delete_btn">
+                      X
+                    </Button>
+                  </div>
+                  <div>
+                    <img
+                      className="img-thumbnail"
+                      src={playerTwo.owner.avatar_url}
+                      alt={playerTwo.name}
+                      style={{ width: '100%', height: 300 }}
+                    />
+                    <span>playName:{playerOne.name}</span>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <input
+                    ref="inputTwo"
+                    placeholder="输入PlayerTwo"
+                    className="submit_btn disabled_btn"
+                    onChange={this.twoInputChange}
+                    onKeyDown={this.twoEnter}
+                  ></input>
+                  <Button
+                    disabled="disabled"
+                    variant="primary"
+                    onClick={this.getPlayerTwo}
+                    ref="submitTwo"
+                  >
+                    查找
+                  </Button>
+                  <div>{renderInfoTwo}</div>
+                </div>
+              )}</Col>
         </Row>
+
+        <div style={{ textAlign: 'center' }}>
+          <Link
+            to={{
+              pathname: `/BattleResult`,
+              search: `?user1=${playerOne.name}&user2=${playerTwo.name}`,
+              state: {
+                playerOne,
+                playerTwo,
+              },
+            }}
+          >
+
+            <Button ref="battle" variant="primary" disabled="disabled">Battle</Button>
+
+          </Link>
+        </div>
+
+
+
       </Container>
     );
   }
@@ -320,14 +342,13 @@ export default class Battle extends Component {
   render() {
     const { playerOne, playerTwo } = this.state;
     return (
-      <div>
-        <BattleBegin
-          setPlayerOne={this.setPlayerOne}
-          setPlayerTwo={this.setPlayerTwo}
-          playerOne={playerOne}
-          playerTwo={playerTwo}
-        ></BattleBegin>
-      </div>
+      <BattleBegin
+        setPlayerOne={this.setPlayerOne}
+        setPlayerTwo={this.setPlayerTwo}
+        playerOne={playerOne}
+        playerTwo={playerTwo}
+      ></BattleBegin>
+
     );
   }
 }

@@ -5,11 +5,8 @@ sm 768
 */
 @media (min-width:576px) {
     .MyCard .Card {
-        font-size: 10px;
-        height:360px;
-    }
-    .MyCard .Card .CardTitle{
-        font-size: 6px;
+    height: 480px;
+    font-size: 10px;
     }
     .MyCard:hover{
         animation:shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both;
@@ -19,7 +16,4 @@ sm 768
     @keyframes shadow-drop-center{
         0%{box-shadow:0 0 0 0 transparent}100%{box-shadow:0 0 20px 0 rgba(0,0,0,.35)}
     }
-    
 }
-
-

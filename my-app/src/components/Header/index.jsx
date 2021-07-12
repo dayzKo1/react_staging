@@ -8,11 +8,16 @@ class LinkList extends Component {
     return (
       <Container>
 
-        <NavLink to="/Popular">
+        <NavLink 
+        style={{marginRight:20}}
+        activeClassName="MyNavLink"
+        to="/Popular">
           Popular
         </NavLink>
 
-        <NavLink to="/Battle">
+        <NavLink 
+        activeClassName="MyNavLink"
+        to="/Battle">
           Battle
         </NavLink>
         

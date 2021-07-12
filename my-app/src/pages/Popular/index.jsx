@@ -198,6 +198,7 @@ export default class Popular extends Component {
     );
     if (githubData.length !== 0) {
       renderInfo = (
+
         <InfiniteScroll
           pageStart={0}
           loadMore={() => this.FetchGit()}
@@ -231,6 +232,7 @@ export default class Popular extends Component {
             </Row>
           </Container>
         </InfiniteScroll>
+
       );
     } else if (error) {
       renderInfo = (
@@ -242,30 +244,35 @@ export default class Popular extends Component {
       );
     }
     return (
-      <Container>
-        <Row>
-          {this.state.tabList.map((list, index) => {
-            return (
-              <Col>
-                <NavLink
-                  to={{
-                    pathname: `/Popular`,
-                    search: `?language=${list.name}`,
-                  }}
-                  className="tab-list"
-                  key={index}
-                  data-filter={list.name}
-                  id={list.name}
-                  onClick={(e) => this.switchTab(e, list)}
-                >
-                  {list.name}
-                </NavLink>
-              </Col>
-            );
-          })}
-          <div>{renderInfo}</div>
-        </Row>
-      </Container>
+      <div>
+        <Container style = {{marginBottom:30,marginTop:30}}>
+          <Row>
+            {this.state.tabList.map((list, index) => {
+              return (
+                <Col>
+                  <NavLink
+                
+                    to={{
+                      pathname: `/Popular`,
+                      search: `?language=${list.name}`,
+                    }}
+                    className="tab-list"
+                    key={index}
+                    data-filter={list.name}
+                    id={list.name}
+                    onClick={(e) => this.switchTab(e, list)}
+                  >
+                    {list.name}
+                  </NavLink>
+                </Col>
+              );
+            })}
+          </Row>
+        </Container>
+
+        {renderInfo}
+
+      </div>
     );
   }
 }

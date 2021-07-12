@@ -12,7 +12,6 @@ export default class App extends Component {
   render() {
     const { nowpages } = this.state;
     return (
-
       <div>
         <Header
           pagesClick={this.pagesClick}

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import axios from "axios";
 import MyCard from "../../components/MyCard";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import './index.css'
 //比较结果展示
 export default class BattleResult extends Component {
@@ -71,10 +71,10 @@ export default class BattleResult extends Component {
   render() {
     const { playerOne, playerTwo, winner } = this.state;
     return (
-      <Container className ="BattleRusult">
+      <Container className="BattleRusult">
         <Row>
           <Col lg={6} md={6} sm={6}>
-            <MyCard
+            <MyCard 
               listNum={
                 winner === playerOne.name
                   ? "Winner"
@@ -106,10 +106,11 @@ export default class BattleResult extends Component {
             />
           </Col>
         </Row>
-        <div style={{ textAlign: 'center' }}>    
-        <button onClick={this.resetTo} className="reget_btn">
-          再来一次
-        </button></div>
+        <div style={{ textAlign: 'center',marginTop:50}}>
+          <Button onClick={this.resetTo}>
+            再来一次
+          </Button>
+        </div>
       </Container>
     );
   }

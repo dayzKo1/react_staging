@@ -1,8 +1,10 @@
-import React,{Component} from "react"
+import React, { Component } from "react"
 import axios from "axios";
 import MyCard from "../../components/MyCard";
+import { Container, Row, Col } from 'react-bootstrap';
+import './index.css'
 //比较结果展示
-export default class BattleResult extends Component{
+export default class BattleResult extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,52 +70,47 @@ export default class BattleResult extends Component{
   }
   render() {
     const { playerOne, playerTwo, winner } = this.state;
-    const divCenterStyle = {
-      textAlign: "center",
-    };
-    const battleMyCardStyle = {
-      justifyContent: "space-around",
-    };
     return (
-      <div className="container_end">
-        <div>
-          <ul style={battleMyCardStyle} className="d-flex flex-wrap">
+      <Container className ="BattleRusult">
+        <Row>
+          <Col lg={6} md={6} sm={6}>
             <MyCard
               listNum={
                 winner === playerOne.name
                   ? "Winner"
                   : winner === ""
-                  ? "Draw"
-                  : "Loser"
+                    ? "Draw"
+                    : "Loser"
               }
               name={playerOne.name}
               avatar={playerOne.owner.avatar_url}
               starsCount={playerOne.stargazers_count}
               forksCount={playerOne.forks_count}
               openIssuesCount={playerOne.open_issues_count}
-            ></MyCard>
+            />
+          </Col>
+          <Col lg={6} md={6} sm={6}>
             <MyCard
               listNum={
                 winner === playerTwo.name
                   ? "Winner"
                   : winner === ""
-                  ? "Draw"
-                  : "Loser"
+                    ? "Draw"
+                    : "Loser"
               }
               name={playerTwo.name}
               avatar={playerTwo.owner.avatar_url}
               starsCount={playerTwo.stargazers_count}
               forksCount={playerTwo.forks_count}
               openIssuesCount={playerTwo.open_issues_count}
-            ></MyCard>
-          </ul>
-        </div>
-        <div style={divCenterStyle}>
-          <button onClick={this.resetTo} className="reget_btn">
-            Reget
-          </button>
-        </div>
-      </div>
+            />
+          </Col>
+        </Row>
+        <div style={{ textAlign: 'center' }}>    
+        <button onClick={this.resetTo} className="reget_btn">
+          再来一次
+        </button></div>
+      </Container>
     );
   }
 }

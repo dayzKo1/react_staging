@@ -3,18 +3,23 @@ lg 1200
 md 992
 sm 768 
 */
-@media (min-width:1200px){
-    .Card{
-        height: 350px;
+@media (min-width:576px) {
+    .MyCard .Card {
+        font-size: 10px;
+        height:360px;
     }
-}
-@media (min-width:992px){
-.Card{
-    height: 400px;
-}
-}
-@media (max-width:768px){
-    .Card{
-        font-size: 30px;
+    .MyCard .Card .CardTitle{
+        font-size: 6px;
     }
+    .MyCard:hover{
+        animation:shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both;
+        transform: scale(1.07);
+        cursor: pointer;
+    }
+    @keyframes shadow-drop-center{
+        0%{box-shadow:0 0 0 0 transparent}100%{box-shadow:0 0 20px 0 rgba(0,0,0,.35)}
+    }
+    
 }
+
+

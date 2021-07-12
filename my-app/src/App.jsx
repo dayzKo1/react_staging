@@ -1,9 +1,6 @@
-import React,{Component} from "react";
-
-import { HashRouter as Router} from "react-router-dom";
+import React, { Component } from "react";
 import Header from "./components/Header"
 import Content from "./components/Content"
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -15,13 +12,14 @@ export default class App extends Component {
   render() {
     const { nowpages } = this.state;
     return (
-        <Router>
-          <Header
-            pagesClick={this.pagesClick}
-            nowpages={nowpages}
-          ></Header>
-          <Content nowpages={nowpages}></Content>
-        </Router>
+
+      <div>
+        <Header
+          pagesClick={this.pagesClick}
+          nowpages={nowpages}
+        ></Header>
+        <Content nowpages={nowpages}></Content>
+      </div>
     );
   }
 }

@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 import MyCard from "../../components/MyCard";
 import Load from "../../components/Load";
 import InfiniteScroll from "react-infinite-scroller";
-import "./index.css";
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 export default class Popular extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +55,6 @@ export default class Popular extends Component {
       error: false,
     };
   }
-
   switchTab = (e, { name, url }) => {
     let { target } = e;
     const filterOption = target.getAttribute("data-filter");
@@ -194,14 +193,8 @@ export default class Popular extends Component {
   render() {
     let renderInfo;
     const { githubData, hasMore, errorContent, error } = this.state;
-    // const { githubData, loading, hasMore, errorContent, error } = this.state;
-
-    // const addList = loading ? "add_hide" : "add_more";
     renderInfo = (
-      <div>  
-        <Spinner animation="grow" />
-        <Load />
-      </div>
+      <Load />
     );
     if (githubData.length !== 0) {
       renderInfo = (
@@ -210,9 +203,9 @@ export default class Popular extends Component {
           loadMore={() => this.FetchGit()}
           hasMore={hasMore}
           loader={
-            <div className="tabLoading" key={0}>
-              <div className="tabLoadingContent">
-                正在查找<i className="fa fa-spinner fa-spin"></i>
+            <div key={0}>
+              <div style={{ textAlign: 'center' }}>
+                <Spinner animation="border" />正在查找
               </div>
             </div>
           }
@@ -249,38 +242,30 @@ export default class Popular extends Component {
       );
     }
     return (
-      <div>
-        <div className="">
+      <Container>
+        <Row>
           {this.state.tabList.map((list, index) => {
             return (
-              // <button
-              //   key={index}
-              //   className="tab-list"
-              //   data-filter={list.name}
-              //   id={list.name}
-              //   onClick={(e) => this.switchTab(e, list)}
-              // >
-              //   {list.name}
-              // </button>
-              <NavLink
-                // to={`/Popular?language=${list.name}`}
-                to={{
-                  pathname: `/Popular`,
-                  search: `?language=${list.name}`,
-                }}
-                className="tab-list"
-                key={index}
-                data-filter={list.name}
-                id={list.name}
-                onClick={(e) => this.switchTab(e, list)}
-              >
-                {list.name}
-              </NavLink>
+              <Col>
+                <NavLink
+                  to={{
+                    pathname: `/Popular`,
+                    search: `?language=${list.name}`,
+                  }}
+                  className="tab-list"
+                  key={index}
+                  data-filter={list.name}
+                  id={list.name}
+                  onClick={(e) => this.switchTab(e, list)}
+                >
+                  {list.name}
+                </NavLink>
+              </Col>
             );
           })}
-        </div>
-        <div className="">{renderInfo}</div>
-      </div>
+          <div>{renderInfo}</div>
+        </Row>
+      </Container>
     );
   }
 }

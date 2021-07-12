@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import "./index.css";
-import {Link,} from "react-router-dom";
-
+import { Link, } from "react-router-dom";
+import { Container, Row, Col ,Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers, faFighterJet, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from 'react-bootstrap';
 //初始页面
 class BattleBegin extends Component {
   constructor(props) {
@@ -130,23 +133,6 @@ class BattleBegin extends Component {
     }
   };
   render() {
-    const faIconStyle = {
-      iFont: {
-        fontSize: 200,
-      },
-      iFontDel: {
-        fontSize: 20,
-      },
-      getImg: {
-        width: "50px",
-        height: "50px",
-        margin: "5px",
-      },
-    };
-    const divCenterStyle = {
-      textAlign: "center",
-      marginBottom: "20px",
-    };
     const { playerOne, playerTwo } = this.props;
     const {
       isOne,
@@ -164,7 +150,7 @@ class BattleBegin extends Component {
     let renderInfoTwo;
     if (notFoundPlayerOne) {
       renderInfoOne = (
-        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+        <p style={{}}>
           未找到该用户
         </p>
       );
@@ -172,10 +158,6 @@ class BattleBegin extends Component {
       renderInfoOne = (
         <p
           style={{
-            color: "red",
-            fontSize: "14px",
-            marginTop: "5px",
-            width: "300px",
           }}
         >
           {errorOneMessage}
@@ -184,7 +166,7 @@ class BattleBegin extends Component {
     }
     if (notFoundPlayerTwo) {
       renderInfoTwo = (
-        <p style={{ color: "red", fontSize: "14px", marginTop: "5px" }}>
+        <p style={{}}>
           未找到该用户
         </p>
       );
@@ -192,10 +174,6 @@ class BattleBegin extends Component {
       renderInfoTwo = (
         <p
           style={{
-            color: "red",
-            fontSize: "14px",
-            marginTop: "5px",
-            width: "300px",
           }}
         >
           {errorTwoMessage}
@@ -203,140 +181,106 @@ class BattleBegin extends Component {
       );
     }
     return (
-      <div className="container">
-        <div style={divCenterStyle}>
-          <h1>Instructions</h1>
-        </div>
-        <div className="d-flex flex-wrap flex-space-around">
-          <div style={divCenterStyle}>
-            <div className="instruction_content" style={divCenterStyle}>
-              Enter Two Github Users
-            </div>
-            <i
-              className="fa fa-users "
-              style={{ ...faIconStyle.iFont, color: "rgb(241, 149, 43)" }}
-            ></i>
-          </div>
-          <div style={divCenterStyle}>
-            <div className="instruction_content" style={divCenterStyle}>
-              Battle
-            </div>
-            <i
-              className="fa fa-fighter-jet"
-              style={{ ...faIconStyle.iFont, color: "rgb(134, 129, 129)" }}
-            ></i>
-          </div>
-          <div style={divCenterStyle}>
-            <div className="instruction_content" style={divCenterStyle}>
-              See The Winner
-            </div>
-            <i
-              className="fa fa-trophy"
-              style={{ ...faIconStyle.iFont, color: "rgb(255, 223, 54)" }}
-            ></i>
-          </div>
-        </div>
-        <div style={divCenterStyle}>
-          <h1 style={{ marginTop: "40px" }}>Players</h1>
-        </div>
-        <div className="d-flex flex-wrap flex-space-around">
-          <div className="players_content">
-            <div style={{ margin: "20px 0" }}>Player One</div>
+      <Container>
+        <h1 style={{ textAlign: 'center' }}>Instructions</h1>
+        <Row style={{ textAlign: 'center' }}>  
+          <Col  lg={4} md={4} sm={6}>
+            <h4>Enter Two Github Users</h4>
+            <FontAwesomeIcon style={{ color: '#ffbf74', fontSize: 200 }} icon={faUsers} />
+          </Col >
+          <Col  lg={4} md={4} sm={6}>
+            <h4>Battle</h4>
+            <FontAwesomeIcon style={{ color: '#b8e2f2', fontSize: 200 }} icon={faFighterJet} />
+          </Col>
+          <Col lg={4} md={4} sm={6}>
+            <h4>See The Winner</h4>
+            <FontAwesomeIcon style={{ color: '#ffdf36', fontSize: 200 }} icon={faTrophy} />
+          </Col>
+        </Row>
+        <h1 style={{ textAlign: 'center' }}>Instructions</h1>
+        <Row style={{ textAlign: 'center' }}>
+        <div>
+          <div>
+            <div style={{}}>Player One</div>
             {loadingOne ? (
               <div>
-                正在查找
-                <i className="fa fa-spinner fa-spin"></i>
+                正在查找<Spinner animation="border" />
               </div>
             ) : isOne ? (
               <div className="showPlayer">
                 <img
                   src={playerOne.owner.avatar_url}
                   alt={playerOne.name}
-                  style={faIconStyle.getImg}
+                  style={{height:80,width:80}}
                 />
                 {playerOne.name}
-                <button onClick={this.findOneAgain} className="delete_btn">
-                  <i
-                    className="fa fa-times-circle"
-                    style={{
-                      ...faIconStyle.iFontDel,
-                      color: "rgb(194, 57, 42)",
-                    }}
-                  ></i>
-                </button>
+                <Button variant="primary" onClick={this.findOneAgain} className="delete_btn">
+                  删除
+                </Button>
               </div>
             ) : (
               <div>
                 <input
                   ref="inputOne"
-                  placeholder="github username"
+                  placeholder="输入PlayerOne"
                   className="player_input"
                   onChange={this.oneInputChange}
                   onKeyDown={this.oneEnter}
                 ></input>
-                <button
+                <Button 
+                  variant="primary"
                   onClick={this.getPlayerOne}
-                  className="submit_btn disabled_btn"
                   ref="submitOne"
                 >
-                  S U B M I T
-                </button>
+                  查找
+                </Button>
                 <div>{renderInfoOne}</div>
               </div>
             )}
           </div>
-
-          <div className="players_content">
-            <div style={{ margin: "20px 0" }}>Player Two</div>
+          <div>
+            <div style={{}}>Player Two</div>
             {loadingTwo ? (
               <div>
                 正在查找
-                <i className="fa fa-spinner fa-spin"></i>
               </div>
             ) : isTwo ? (
               <div className="showPlayer">
                 <img
                   src={playerTwo.owner.avatar_url}
                   alt={playerTwo.name}
-                  style={faIconStyle.getImg}
+                  style={{height:50,width:50}}
                 />
                 {playerTwo.name}
-                <button onClick={this.findTwoAgain} className="delete_btn">
-                  <i
-                    className="fa fa-times-circle"
-                    style={{
-                      ...faIconStyle.iFontDel,
-                      color: "rgb(194, 57, 42)",
-                    }}
-                  ></i>
-                </button>
+                <Button variant="primary" onClick={this.findTwoAgain} className="delete_btn">
+                删除
+                </Button>
               </div>
             ) : (
               <div>
                 <input
                   ref="inputTwo"
-                  placeholder="github username"
-                  className="player_input"
+                  placeholder="输入PlayerTwo"
+                  className="submit_btn disabled_btn"
                   onChange={this.twoInputChange}
                   onKeyDown={this.twoEnter}
                 ></input>
-                <button
+                <Button variant="primary"
                   onClick={this.getPlayerTwo}
-                  className="submit_btn disabled_btn"
                   ref="submitTwo"
                 >
-                  S U B M I T
-                </button>
+                  查找
+                </Button>
                 <div>{renderInfoTwo}</div>
               </div>
             )}
           </div>
         </div>
         {isOne && isTwo && (
-          <div style={divCenterStyle}>
+          <div style={{}}>
             <Link
               to={{
-                pathname: `/BattleEnd`,
+                pathname: `/BattleResult`,
                 search: `?user1=${playerOne.name}&user2=${playerTwo.name}`,
                 state: {
                   playerOne,
@@ -344,11 +288,12 @@ class BattleBegin extends Component {
                 },
               }}
             >
-              <button className="battle_btn">Battle</button>
+              <Button variant="primary" className="battle_btn">Battle</Button>
             </Link>
           </div>
         )}
-      </div>
+        </Row>
+      </Container>
     );
   }
 }

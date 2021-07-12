@@ -1,0 +1,20 @@
+/* 
+lg 1200
+md 992
+sm 768 
+*/
+@media (min-width:1200px){
+    .Card{
+        height: 350px;
+    }
+}
+@media (min-width:992px){
+.Card{
+    height: 400px;
+}
+}
+@media (max-width:768px){
+    .Card{
+        font-size: 30px;
+    }
+}

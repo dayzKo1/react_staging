@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import Card from "../../components/Card";
+import MyCard from "../../components/MyCard";
 import Load from "../../components/Load";
 import InfiniteScroll from "react-infinite-scroller";
 import "./index.css";
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 export default class Popular extends Component {
   constructor(props) {
     super(props);
@@ -192,15 +193,13 @@ export default class Popular extends Component {
 
   render() {
     let renderInfo;
-    const { githubData,hasMore, errorContent, error } = this.state;
+    const { githubData, hasMore, errorContent, error } = this.state;
     // const { githubData, loading, hasMore, errorContent, error } = this.state;
 
     // const addList = loading ? "add_hide" : "add_more";
     renderInfo = (
-      <div>
-        <h3 style={{ textAlign: "center" }}>
-          加载中<i className="fa fa-spinner fa-spin"></i>
-        </h3>
+      <div>  
+        <Spinner animation="grow" />
         <Load />
       </div>
     );
@@ -218,22 +217,26 @@ export default class Popular extends Component {
             </div>
           }
         >
-          <div className="listContent d-flex flex-wrap">
-            {githubData.map((item, index) => {
-              return (
-                <Card
-                  key={index}
-                  listNum={++index}
-                  avatar={item.owner.avatar_url}
-                  name={item.name}
-                  starsCount={item.stargazers_count}
-                  forksCount={item.forks_count}
-                  openIssuesCount={item.open_issues_count}
-                  htmlUrl={item.html_url}
-                />
-              );
-            })}
-          </div>
+          <Container>
+            <Row>
+              {githubData.map((item, index) => {
+                return (
+                  <Col lg={2} md={3} sm={4}>
+                    <MyCard
+                      key={index}
+                      listNum={++index}
+                      avatar={item.owner.avatar_url}
+                      name={item.name}
+                      starsCount={item.stargazers_count}
+                      forksCount={item.forks_count}
+                      openIssuesCount={item.open_issues_count}
+                      htmlUrl={item.html_url}
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
         </InfiniteScroll>
       );
     } else if (error) {
@@ -247,8 +250,7 @@ export default class Popular extends Component {
     }
     return (
       <div>
-        <span className="title">Github热门项目</span>
-        <div className="tab d-flex flex-wrap">
+        <div className="">
           {this.state.tabList.map((list, index) => {
             return (
               // <button
@@ -277,7 +279,7 @@ export default class Popular extends Component {
             );
           })}
         </div>
-        <div className="list-content d-flex flex-wrap">{renderInfo}</div>
+        <div className="">{renderInfo}</div>
       </div>
     );
   }

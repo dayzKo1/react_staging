@@ -1,7 +1,6 @@
 import React,{Component} from "react"
 import axios from "axios";
-import "./index.css";
-import Card from "../../components/Card";
+import MyCard from "../../components/MyCard";
 //比较结果展示
 export default class BattleResult extends Component{
   constructor(props) {
@@ -72,14 +71,14 @@ export default class BattleResult extends Component{
     const divCenterStyle = {
       textAlign: "center",
     };
-    const battleCardStyle = {
+    const battleMyCardStyle = {
       justifyContent: "space-around",
     };
     return (
       <div className="container_end">
         <div>
-          <ul style={battleCardStyle} className="d-flex flex-wrap">
-            <Card
+          <ul style={battleMyCardStyle} className="d-flex flex-wrap">
+            <MyCard
               listNum={
                 winner === playerOne.name
                   ? "Winner"
@@ -92,8 +91,8 @@ export default class BattleResult extends Component{
               starsCount={playerOne.stargazers_count}
               forksCount={playerOne.forks_count}
               openIssuesCount={playerOne.open_issues_count}
-            ></Card>
-            <Card
+            ></MyCard>
+            <MyCard
               listNum={
                 winner === playerTwo.name
                   ? "Winner"
@@ -106,7 +105,7 @@ export default class BattleResult extends Component{
               starsCount={playerTwo.stargazers_count}
               forksCount={playerTwo.forks_count}
               openIssuesCount={playerTwo.open_issues_count}
-            ></Card>
+            ></MyCard>
           </ul>
         </div>
         <div style={divCenterStyle}>

@@ -4,3 +4,6 @@ button{
 button:disabled:hover{
     cursor:not-allowed
 }
+.disabled:hover{
+    cursor:not-allowed
+}

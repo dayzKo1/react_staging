@@ -6,6 +6,8 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faFighterJet, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from 'react-bootstrap';
+
+
 //初始页面
 class BattleBegin extends Component {
   constructor(props) {
@@ -96,7 +98,7 @@ class BattleBegin extends Component {
       this.setState({ isTwo: true, notFoundPlayerTwo: false, errorTwo: false });
     } catch (e) {
       if (e.response) {
-        //     console.log("getPlayerTwo: ", e.response.data.message);
+        //console.log("getPlayerTwo: ", e.response.data.message);
         this.setState({
           errorTwo: true,
           errorTwoMessage: e.response.data.message,
@@ -121,18 +123,18 @@ class BattleBegin extends Component {
   oneInputChange = () => {
     const inputOne = this.refs.inputOne.value;
     if (inputOne.match(/^[ ]*$/)) {
-      this.refs.submitOne.disabled = true;
+      this.refs.submitOne.className = "btn-primary disabled";
       return;
     }
-    this.refs.submitOne.disabled = false;
+    this.refs.submitOne.className = "btn-primary";
   };
   twoInputChange = () => {
     const inputTwo = this.refs.inputTwo.value;
     if (inputTwo.match(/^[ ]*$/)) {
-      this.refs.submitTwo.disabled = true;
+      this.refs.submitTwo.className = "btn-primary disabled";
       return;
     }
-    this.refs.submitTwo.disabled = "";
+    this.refs.submitTwo.className = "btn-primary";
   };
   //当焦点在Player One的输入框并按下enter键时
   oneEnter = (e) => {
@@ -241,7 +243,7 @@ class BattleBegin extends Component {
                   variant="primary"
                   onClick={this.getPlayerOne}
                   ref="submitOne"
-                  disabled={true}
+                  className="disabled"
                 >
                   查找
                 </Button>
@@ -282,18 +284,18 @@ class BattleBegin extends Component {
                     onChange={this.twoInputChange}
                     onKeyDown={this.twoEnter}
                   ></input>
-
                   <Button
                     variant="primary"
                     onClick={this.getPlayerTwo}
                     ref="submitTwo"
-                    disabled={true}
+                    className="disabled"
                   >
                     查找
                   </Button>
                   <div>{renderInfoTwo}</div>
                 </div>
-              )}
+              )
+            }
           </Col>
         </Row>
 

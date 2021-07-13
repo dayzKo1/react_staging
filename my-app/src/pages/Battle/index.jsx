@@ -243,7 +243,7 @@ class BattleBegin extends Component {
                   variant="primary"
                   onClick={this.getPlayerOne}
                   ref="submitOne"
-                  className="disabled"
+                  className="btn-primary disabled"
                 >
                   查找
                 </Button>
@@ -288,7 +288,7 @@ class BattleBegin extends Component {
                     variant="primary"
                     onClick={this.getPlayerTwo}
                     ref="submitTwo"
-                    className="disabled"
+                    className="btn-primary disabled"
                   >
                     查找
                   </Button>

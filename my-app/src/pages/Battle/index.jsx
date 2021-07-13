@@ -216,9 +216,11 @@ class BattleBegin extends Component {
               <div style={{}}>
                 <div >
                   <div style={{ textAlign: 'center' }}>
-                    <Button variant="primary" onClick={this.findOneAgain}>
+                    <button
+                      className="btn-primary"
+                      onClick={this.findOneAgain}>
                       重试
-                    </Button>
+                    </button>
                   </div>
                   <span>playerName:{playerOne.name}</span>
                   <div>
@@ -239,14 +241,13 @@ class BattleBegin extends Component {
                   onChange={this.oneInputChange}
                   onKeyDown={this.oneEnter}
                 ></input>
-                <Button
-                  variant="primary"
+                <button
                   onClick={this.getPlayerOne}
                   ref="submitOne"
                   className="btn-primary disabled"
                 >
                   查找
-                </Button>
+                </button>
                 <div>{renderInfoOne}</div>
               </div>
             )}
@@ -262,9 +263,11 @@ class BattleBegin extends Component {
               ) : isTwo ? (
                 <div style={{}}>
                   <div style={{ textAlign: 'center' }}>
-                    <Button variant="primary" onClick={this.findTwoAgain}>
+                    <button
+                      className="btn-primary"
+                      onClick={this.findTwoAgain}>
                       重试
-                    </Button>
+                    </button>
                   </div>
                   <span>playerName:{playerTwo.name}</span>
                   <div>
@@ -284,14 +287,13 @@ class BattleBegin extends Component {
                     onChange={this.twoInputChange}
                     onKeyDown={this.twoEnter}
                   ></input>
-                  <Button
-                    variant="primary"
+                  <button
                     onClick={this.getPlayerTwo}
                     ref="submitTwo"
                     className="btn-primary disabled"
                   >
                     查找
-                  </Button>
+                  </button>
                   <div>{renderInfoTwo}</div>
                 </div>
               )

@@ -90,7 +90,7 @@ export default class Popular extends Component {
           obj[res[0]] = res[1];
         }
       }
-      console.log(obj.language);
+     // console.log(obj.language);
       if (obj.language) {
         try {
           const tabUrl = `https://api.github.com/search/repositories?q=stars:%3E1+language:${obj.language}&sort=stars&order=desc&type=Repositories&page=`;
@@ -262,9 +262,7 @@ export default class Popular extends Component {
             })}
           </div>
         </Container>
-
         {renderInfo}
-
       </div>
     );
   }

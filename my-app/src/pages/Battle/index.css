@@ -3,6 +3,10 @@ button{
 }
 button:disabled:hover{
     cursor:not-allowed
+
+}
+.disabled{
+    opacity: 0.5;
 }
 .disabled:hover{
     cursor:not-allowed

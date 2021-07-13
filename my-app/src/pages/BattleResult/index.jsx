@@ -33,7 +33,7 @@ export default class BattleResult extends Component {
     let playerOne = {}
     let playerTwo = {}
     if (this.props.location.state) {
-      console.log(this.props.location.state);
+      //console.log(this.props.location.state);
       playerOne = this.props.location.state.playerOne;
       playerTwo = this.props.location.state.playerTwo
     } else {
@@ -74,7 +74,7 @@ export default class BattleResult extends Component {
       <Container className="BattleRusult">
         <Row>
           <Col lg={6} md={6} sm={6}>
-            <MyCard 
+            <MyCard
               listNum={
                 winner === playerOne.name
                   ? "Winner"
@@ -106,7 +106,7 @@ export default class BattleResult extends Component {
             />
           </Col>
         </Row>
-        <div style={{ textAlign: 'center',marginTop:50}}>
+        <div style={{ textAlign: 'center', marginTop: 50 }}>
           <Button onClick={this.resetTo}>
             再来一次
           </Button>

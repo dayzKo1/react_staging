@@ -20,10 +20,10 @@ export default class MyCard extends Component {
       <div className="MyCard" onClick={this.openNewPage} title={name}>
         <Card className="Card" style={{ marginBottom: 30, backgroundColor: '#b8e2f2' }}>
           <div className="CardNum" style={{ textAlign: 'center' }}>#{listNum}</div>
-          <Card.Img className="CardImg img-fluid img-thumbnail lazyload" style={{ width: '100%',padding:20}} variant="top" data-src={avatar} />
+          <Card.Img className="CardImg img-fluid img-thumbnail lazyload" style={{ width: '100%', padding: 20 }} variant="top" data-src={avatar} />
           <Card.Body>
-            <Card.Title className="CardTitle" style={{ textAlign: 'center',fontSize:15 }}>{name}</Card.Title>
-            <Card.Text>
+            <Card.Title className="CardTitle" style={{ textAlign: 'center', fontSize: 15, color: 'red', textTransform: 'uppercase' }}>{name}</Card.Title>
+            <div>
               <div style={{ marginBottom: "5px" }}>
                 <FontAwesomeIcon style={{ color: '#ffbf74', width: 20 }} icon={faUsers} />
                 <span> {name}</span>
@@ -40,18 +40,18 @@ export default class MyCard extends Component {
                 <FontAwesomeIcon style={{ color: '#f18a92', width: 20 }} icon={faExclamation} />
                 <span>{openIssuesCount} open Issues</span>
               </div>
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
       </div>
-        );
+    );
   }
 }
-        MyCard.defaultProps = {
-        listNum: '???',
-        avatar: 'https://avatars.githubusercontent.com/u/63722633?v=4',
-        name: '???',
-        starsCount: '???',
-        forksCount: '???',
-        openIssuesCount: '???'
+MyCard.defaultProps = {
+  listNum: '???',
+  avatar: 'https://avatars.githubusercontent.com/u/63722633?v=4',
+  name: '???',
+  starsCount: '???',
+  forksCount: '???',
+  openIssuesCount: '???'
 }

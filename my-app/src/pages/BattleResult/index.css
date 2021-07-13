@@ -6,27 +6,38 @@ sm 768
 @media (min-width:576px) {
     .BattleRusult .MyCard .Card {
         font-size: 18px;
-        height:450px;
+        height: 450px;
     }
-    .BattleRusult .MyCard .Card .CardTitle{
+
+    .BattleRusult .MyCard .Card .CardTitle {
         font-size: 20px;
     }
-    .BattleRusult .MyCard:hover{
-        animation:shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both;
+
+    .BattleRusult .MyCard:hover {
+        animation: shadow-drop-center .4s cubic-bezier(.25, .46, .45, .94) both;
         transform: scale(1.07);
         cursor: pointer;
     }
-    @keyframes shadow-drop-center{
-        0%{box-shadow:0 0 0 0 transparent}100%{box-shadow:0 0 20px 0 rgba(0,0,0,.35)}
+
+    @keyframes shadow-drop-center {
+        0% {
+            box-shadow: 0 0 0 0 transparent
+        }
+
+        100% {
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, .35)
+        }
     }
 }
-@media (min-width:768px){
+
+@media (min-width:768px) {
     .BattleRusult .MyCard .Card {
-        height:650px;
+        height: 650px;
     }
 }
-@media (min-width:1200px){
+
+@media (min-width:1200px) {
     .BattleRusult .MyCard .Card {
-        height:750px;
+        height: 750px;
     }
 }

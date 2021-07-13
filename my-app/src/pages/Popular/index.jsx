@@ -52,7 +52,7 @@ export default class Popular extends Component {
       pageTotal: 5,
       hasMore: true,
       errorContent: {},
-      error: false,
+      error: false
     };
   }
   switchTab = (e, { name, url }) => {
@@ -193,12 +193,12 @@ export default class Popular extends Component {
   render() {
     let renderInfo;
     const { githubData, hasMore, errorContent, error } = this.state;
-    renderInfo = (
+    renderInfo = (<div>
       <Load />
+    </div>
     );
     if (githubData.length !== 0) {
       renderInfo = (
-
         <InfiniteScroll
           pageStart={0}
           loadMore={() => this.FetchGit()}
@@ -215,7 +215,7 @@ export default class Popular extends Component {
             <Row>
               {githubData.map((item, index) => {
                 return (
-                  <Col lg={2} md={3} sm={4}>
+                  <Col lg={3} md={4} sm={6}>
                     <MyCard
                       key={index}
                       listNum={++index}
@@ -236,38 +236,31 @@ export default class Popular extends Component {
       );
     } else if (error) {
       renderInfo = (
-        <div>
-          <h3 style={{ textAlign: "center", color: "red" }}>
-            {errorContent}
-          </h3>
-        </div>
+        alert(errorContent)
       );
     }
     return (
       <div>
-        <Container style = {{marginBottom:30,marginTop:30}}>
-          <Row>
+        <Container style={{ marginBottom: 30, marginTop: 30 }}>
+          <div style={{ textAlign: 'center' }}>
             {this.state.tabList.map((list, index) => {
               return (
-                <Col>
-                  <NavLink
-                
-                    to={{
-                      pathname: `/Popular`,
-                      search: `?language=${list.name}`,
-                    }}
-                    className="tab-list"
-                    key={index}
-                    data-filter={list.name}
-                    id={list.name}
-                    onClick={(e) => this.switchTab(e, list)}
-                  >
-                    {list.name}
-                  </NavLink>
-                </Col>
+                <NavLink style={{ paddingRight: 30 }}
+                  to={{
+                    pathname: `/Popular`,
+                    search: `?language=${list.name}`,
+                  }}
+                  className="tab-list"
+                  key={index}
+                  data-filter={list.name}
+                  id={list.name}
+                  onClick={(e) => this.switchTab(e, list)}
+                >
+                  {list.name}
+                </NavLink>
               );
             })}
-          </Row>
+          </div>
         </Container>
 
         {renderInfo}

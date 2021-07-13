@@ -5,8 +5,8 @@ sm 768
 */
 @media (min-width:576px) {
     .MyCard .Card {
-    height: 480px;
-    font-size: 10px;
+    height: 440px;
+    font-size: 14px;
     }
     .MyCard:hover{
         animation:shadow-drop-center .4s cubic-bezier(.25,.46,.45,.94) both;

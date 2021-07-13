@@ -1,8 +1,12 @@
 .MyNavLink{
 color:black;
+text-transform: uppercase;
+font-weight: 600;
 }
 .active{
     color:black;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 a:hover{
     text-decoration: none;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import "./index.css";
-import { Link, } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faFighterJet, faTrophy } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +29,7 @@ class BattleBegin extends Component {
     const inputOne = this.refs.inputOne.value;
     //判断是否为空
     if (inputOne.match(/^[ ]*$/)) {
-      alert("请确认Player One是否已输入");
+      alert("Player One不能为空！");
       this.refs.inputOne.value = "";
       return;
     }
@@ -53,7 +53,7 @@ class BattleBegin extends Component {
       this.setState({ isOne: true, notFoundPlayerOne: false, errorOne: false });
     } catch (e) {
       if (e.response) {
-        //     console.log("getPlayerOne: ", e.response.data.message);
+        //console.log("getPlayerOne: ", e.response.data.message);
         this.setState({
           errorOne: true,
           errorOneMessage: e.response.data.message,
@@ -61,17 +61,23 @@ class BattleBegin extends Component {
       }
     }
     this.setState({ loadingOne: false });
+    if (this.state.isOne && this.state.isTwo) {
+      this.refs.battle.disabled = ""
+    } else {
+      this.refs.battle.disabled = "disabled"
+    }
   };
   //重新查找Player One
   findOneAgain = () => {
     this.props.setPlayerOne({});
     this.setState({ isOne: false });
+    this.refs.battle.disabled = "disabled"
   };
   //查找Player Two
   getPlayerTwo = async () => {
     const inputTwo = this.refs.inputTwo.value;
     if (inputTwo.match(/^[ ]*$/)) {
-      alert("请确认Player Two是否已输入");
+      alert("Player Two不能为空！");
       this.refs.inputTwo.value = "";
       return;
     }
@@ -98,28 +104,32 @@ class BattleBegin extends Component {
       }
     }
     this.setState({ loadingTwo: false });
+
     if (this.state.isOne && this.state.isTwo) {
       this.refs.battle.disabled = ""
+    } else {
+      this.refs.battle.disabled = "disabled"
     }
   };
+  //重新查找player two
   findTwoAgain = () => {
     this.props.setPlayerTwo({});
     this.setState({ isTwo: false });
+    this.refs.battle.disabled = "disabled";
   };
   //输入框里的值为空时Submit不可点击
   oneInputChange = () => {
     const inputOne = this.refs.inputOne.value;
-    console.log(inputOne)
-    if (inputOne.match('/^[ ]*$/')) {
-      this.refs.submitOne.disabled = "disabled";
+    if (inputOne.match(/^[ ]*$/)) {
+      this.refs.submitOne.disabled = true;
       return;
     }
-    this.refs.submitOne.disabled = "";
+    this.refs.submitOne.disabled = false;
   };
   twoInputChange = () => {
     const inputTwo = this.refs.inputTwo.value;
     if (inputTwo.match(/^[ ]*$/)) {
-      this.refs.submitTwo.disabled = "disabled";
+      this.refs.submitTwo.disabled = true;
       return;
     }
     this.refs.submitTwo.disabled = "";
@@ -136,6 +146,7 @@ class BattleBegin extends Component {
       this.getPlayerTwo();
     }
   };
+
   render() {
     const { playerOne, playerTwo } = this.props;
     const {
@@ -154,77 +165,67 @@ class BattleBegin extends Component {
     let renderInfoTwo;
     if (notFoundPlayerOne) {
       renderInfoOne = (
-        <p style={{}}>
+        <p>
           未找到该用户
         </p>
       );
     } else if (errorOne) {
       renderInfoOne = (
-        <p
-          style={{
-          }}
-        >
-          {errorOneMessage}
-        </p>
+        alert(errorOneMessage)
       );
     }
     if (notFoundPlayerTwo) {
       renderInfoTwo = (
-        <p style={{}}>
+        <p>
           未找到该用户
         </p>
       );
     } else if (errorTwo) {
       renderInfoTwo = (
-        <p
-          style={{
-          }}
-        >
-          {errorTwoMessage}
-        </p>
+        alert(errorTwoMessage)
       );
     }
     return (
       <Container>
-        <h1 style={{ textAlign: 'center' }}>Instructions</h1>
-        <Row style={{ textAlign: 'center' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Instructions</h1>
+        <Row style={{ textAlign: 'center', marginBottom: 30 }}>
           <Col lg={4} md={4} sm={6}>
             <h4>Enter Two Github Users</h4>
-            <FontAwesomeIcon style={{ color: '#ffbf74', fontSize: 200 }} icon={faUsers} />
+            <FontAwesomeIcon style={{ color: '#ffbf74', fontSize: 150 }} icon={faUsers} />
           </Col >
           <Col lg={4} md={4} sm={6}>
             <h4>Battle</h4>
-            <FontAwesomeIcon style={{ color: '#b8e2f2', fontSize: 200 }} icon={faFighterJet} />
+            <FontAwesomeIcon style={{ color: '#b8e2f2', fontSize: 150 }} icon={faFighterJet} />
           </Col>
           <Col lg={4} md={4} sm={6}>
             <h4>See The Winner</h4>
-            <FontAwesomeIcon style={{ color: '#ffdf36', fontSize: 200 }} icon={faTrophy} />
+            <FontAwesomeIcon style={{ color: '#ffdf36', fontSize: 150 }} icon={faTrophy} />
           </Col>
         </Row>
         <h1 style={{ textAlign: 'center' }}>Fight</h1>
         <Row style={{ textAlign: 'center' }}>
           <Col lg={6} md={6} sm={12}>
-            <div>Player One</div>
+            <h4>Player One</h4>
             {loadingOne ? (
               <div>
                 正在查找<Spinner animation="border" />
               </div>
             ) : isOne ? (
               <div style={{}}>
-                <div style={{ backgroundColor: 'skyblue', textAlign: 'center' }}>
-                  <div style={{ textAlign: 'right' }}>
-                    <Button variant="primary" onClick={this.findOneAgain} className="delete_btn">
-                      X
+                <div >
+                  <div style={{ textAlign: 'center' }}>
+                    <Button variant="primary" onClick={this.findOneAgain}>
+                      重试
                     </Button>
                   </div>
+                  <span>playerName:{playerOne.name}</span>
                   <div>
                     <img
-                      className="img-thumbnail"
-                      src={playerOne.owner.avatar_url}
+                      className="img-thumbnail lazyload"
+                      data-src={playerOne.owner.avatar_url}
                       alt={playerOne.name}
-                      style={{ width: '100%', height: 300 }}
+                      style={{ height: 100, width: 100 }}
                     />
-                    <span>playName:{playerOne.name}</span>
                   </div>
                 </div>
               </div>
@@ -232,16 +233,15 @@ class BattleBegin extends Component {
               <div>
                 <input
                   ref="inputOne"
-                  placeholder="输入PlayerOne"
-                  className="player_input"
+                  placeholder="输入Player One"
                   onChange={this.oneInputChange}
                   onKeyDown={this.oneEnter}
                 ></input>
                 <Button
-                  disabled="disabled"
                   variant="primary"
                   onClick={this.getPlayerOne}
                   ref="submitOne"
+                  disabled={true}
                 >
                   查找
                 </Button>
@@ -251,53 +251,55 @@ class BattleBegin extends Component {
 
           </Col>
           <Col lg={6} md={6} sm={12}>
-            <div>Player Two</div>
+            <h4>Player Two</h4>
             {
               loadingTwo ? (
                 <div>
                   正在查找<Spinner animation="border" />
                 </div>
               ) : isTwo ? (
-                <div style={{ backgroundColor: 'skyblue', textAlign: 'center' }}>
-                  <div style={{ textAlign: 'right' }}>
-                    <Button variant="primary" onClick={this.findTwoAgain} className="delete_btn">
-                      X
+                <div style={{}}>
+                  <div style={{ textAlign: 'center' }}>
+                    <Button variant="primary" onClick={this.findTwoAgain}>
+                      重试
                     </Button>
                   </div>
+                  <span>playerName:{playerTwo.name}</span>
                   <div>
                     <img
-                      className="img-thumbnail"
-                      src={playerTwo.owner.avatar_url}
+                      className="img-thumbnail lazyload"
+                      data-src={playerTwo.owner.avatar_url}
                       alt={playerTwo.name}
-                      style={{ width: '100%', height: 300 }}
+                      style={{ height: 100, width: 100 }}
                     />
-                    <span>playName:{playerOne.name}</span>
                   </div>
                 </div>
               ) : (
-                <div>
+                <div style={{}}>
                   <input
                     ref="inputTwo"
-                    placeholder="输入PlayerTwo"
-                    className="submit_btn disabled_btn"
+                    placeholder="输入Player Two"
                     onChange={this.twoInputChange}
                     onKeyDown={this.twoEnter}
                   ></input>
+
                   <Button
-                    disabled="disabled"
                     variant="primary"
                     onClick={this.getPlayerTwo}
                     ref="submitTwo"
+                    disabled={true}
                   >
                     查找
                   </Button>
                   <div>{renderInfoTwo}</div>
                 </div>
-              )}</Col>
+              )}
+          </Col>
         </Row>
 
         <div style={{ textAlign: 'center' }}>
-          <Link
+
+          <NavLink
             to={{
               pathname: `/BattleResult`,
               search: `?user1=${playerOne.name}&user2=${playerTwo.name}`,
@@ -307,13 +309,10 @@ class BattleBegin extends Component {
               },
             }}
           >
-
             <Button ref="battle" variant="primary" disabled="disabled">Battle</Button>
+          </NavLink>
 
-          </Link>
         </div>
-
-
 
       </Container>
     );

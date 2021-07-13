@@ -18,30 +18,28 @@ export default class MyCard extends Component {
     } = this.props;
     return (
       <div className="MyCard" onClick={this.openNewPage} title={name}>
-        <Card className="Card" style={{ marginBottom: 20, backgroundColor: 'skyblue' }}>
+        <Card className="Card" style={{ marginBottom: 30, backgroundColor: '#b8e2f2' }}>
           <div className="CardNum" style={{ textAlign: 'center' }}>#{listNum}</div>
-          <Card.Img className="CardImg img-fluid img-thumbnail" style={{ width: '100%' }} variant="top" src={avatar} />
+          <Card.Img className="CardImg img-fluid img-thumbnail lazyload" style={{ width: '100%',padding:20}} variant="top" data-src={avatar} />
           <Card.Body>
-            <Card.Title className="CardTitle" style={{ textAlign: 'center' }}>{name}</Card.Title>
+            <Card.Title className="CardTitle" style={{ textAlign: 'center',fontSize:15 }}>{name}</Card.Title>
             <Card.Text>
-
               <div style={{ marginBottom: "5px" }}>
                 <FontAwesomeIcon style={{ color: '#ffbf74', width: 20 }} icon={faUsers} />
-                <span style={{ fontWeight: "bold" }}> {name}</span>
+                <span> {name}</span>
               </div>
               <div style={{ marginBottom: "5px" }}>
-                <FontAwesomeIcon style={{ color: '#ffd700', width: 20 }} icon={faStar} />{starsCount}
+                <FontAwesomeIcon style={{ color: '#ffd700', width: 20 }} icon={faStar} />
                 <span>{starsCount} stars</span>
               </div>
               <div style={{ marginBottom: "5px" }}>
-                <FontAwesomeIcon style={{ color: '#82c3f5', width: 20 }} icon={faShareAlt} />{forksCount}
+                <FontAwesomeIcon style={{ color: '#82c3f5', width: 20 }} icon={faShareAlt} />
                 <span>{forksCount} forks</span>
               </div>
               <div>
-                <FontAwesomeIcon style={{ color: '#f18a92', width: 20 }} icon={faExclamation} />{openIssuesCount}
-                <span>{openIssuesCount} open issues</span>
+                <FontAwesomeIcon style={{ color: '#f18a92', width: 20 }} icon={faExclamation} />
+                <span>{openIssuesCount} open Issues</span>
               </div>
-
             </Card.Text>
           </Card.Body>
         </Card>
@@ -50,7 +48,7 @@ export default class MyCard extends Component {
   }
 }
         MyCard.defaultProps = {
-          listNum: '???',
+        listNum: '???',
         avatar: 'https://avatars.githubusercontent.com/u/63722633?v=4',
         name: '???',
         starsCount: '???',

@@ -214,14 +214,7 @@ class BattleBegin extends Component {
               </div>
             ) : isOne ? (
               <div style={{}}>
-                <div >
-                  <div style={{ textAlign: 'center' }}>
-                    <button
-                      className="btn-primary"
-                      onClick={this.findOneAgain}>
-                      重试
-                    </button>
-                  </div>
+                <div>
                   <span>playerName:{playerOne.name}</span>
                   <div>
                     <img
@@ -232,6 +225,13 @@ class BattleBegin extends Component {
                     />
                   </div>
                 </div>
+                <div style={{ textAlign: 'center' }}>
+                    <button
+                      className="btn-primary"
+                      onClick={this.findOneAgain}>
+                      删除
+                    </button>
+                  </div>
               </div>
             ) : (
               <div>
@@ -263,11 +263,6 @@ class BattleBegin extends Component {
               ) : isTwo ? (
                 <div style={{}}>
                   <div style={{ textAlign: 'center' }}>
-                    <button
-                      className="btn-primary"
-                      onClick={this.findTwoAgain}>
-                      重试
-                    </button>
                   </div>
                   <span>playerName:{playerTwo.name}</span>
                   <div>
@@ -278,6 +273,11 @@ class BattleBegin extends Component {
                       style={{ height: 100, width: 100 }}
                     />
                   </div>
+                  <button
+                      className="btn-primary"
+                      onClick={this.findTwoAgain}>
+                      删除
+                    </button>
                 </div>
               ) : (
                 <div style={{}}>

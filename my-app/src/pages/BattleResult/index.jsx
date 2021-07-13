@@ -21,6 +21,8 @@ export default class BattleResult extends Component {
         stargazers_count: 0,
       },
       winner: "",
+      errorContent: {},
+      error: false
     };
     this.resetTo = this.resetTo.bind(this);
     this.fetchGet = this.fetchGet.bind(this);
@@ -38,12 +40,22 @@ export default class BattleResult extends Component {
       playerTwo = this.props.location.state.playerTwo
     } else {
       let obj = {};
-      if (window.location.href.includes("?")) {
+      if (
+        window.location.href.includes("?") &&
+        window.location.href.includes("user1=") &&
+        window.location.href.includes("user2=") &&
+        window.location.href.includes("&")
+      ) {
         let arr = window.location.href.split("?")[1].split("&");
         for (let i = 0; i < arr.length; i++) {
           let res = arr[i].split("=");
           obj[res[0]] = res[1];
         }
+      }
+      else {
+        alert('参数缺失，返回battle页');
+        //地址不规范 返回battle
+        this.props.history.replace('/battle')
       }
       const { user1, user2 } = obj;
       const urlOne = `https://api.github.com/search/repositories?q=${user1}`;
